@@ -1,0 +1,8 @@
+default:
+  name: default
+  logfile: ./log/app.log
+  loglevel: DEBUG
+db:
+  name: db
+  logfile: ./log/db.log
+  loglevel: INFO

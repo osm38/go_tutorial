@@ -5,7 +5,7 @@ import (
 	"sample/logging"
 )
 
-var logger = logging.GetLogger()
+var logger = logging.GetDefaultLogger()
 
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
 	hello := []byte("Hello World!!!")
