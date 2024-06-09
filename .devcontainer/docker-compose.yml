@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    build: ./build/app
+    volumes:
+      - ../:/go/src/app
+    ports:
+      - 8080:8080
+    tty: true
+    environment:
+      - TZ=Asia/Tokyo
+
+  db:
+    image: postgres:16.3-alpine3.20
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - TZ=Asia/Tokyo
+
+volumes:
+  db_data:
