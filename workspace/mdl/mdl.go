@@ -1,7 +1,10 @@
 package mdl
 
-import "sample/logging"
-import "golang.org/x/xerrors"
+import (
+	"sample/logging"
+
+	"golang.org/x/xerrors"
+)
 
 func Hello() {
 	logger := logging.GetDefaultLogger()
