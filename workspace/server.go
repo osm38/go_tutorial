@@ -1,18 +1,12 @@
 package main
 
 import (
-	"context"
-	"encoding/json"
 	"fmt"
 	http "net/http"
 	"os"
 	shttp "sample/http"
 	"sample/logging"
-	"sample/model"
 
-	"sample/aws"
-
-	"github.com/aws/aws-sdk-go-v2/service/kinesis"
 	"gorm.io/driver/postgres"
 	"gorm.io/gen"
 	"gorm.io/gorm"
@@ -21,32 +15,12 @@ import (
 var logger = logging.GetDefaultLogger()
 
 func main() {
-	client := aws.KinesisClient()
-
-	user := &model.User{
-		ID:   1,
-		Name: "taro",
-		Age:  50,
-	}
-	data, _ := json.Marshal(user)
-	fmt.Println(string(data))
-	pk := "dummy"
-	stream := "TestStream"
-
-	record := &kinesis.PutRecordInput{
-		Data:         data,
-		PartitionKey: &pk,
-		StreamName:   &stream,
-	}
-	output, err := client.PutRecord(context.Background(), record, func(o *kinesis.Options) { o.Region = "ap-northeast-1" })
-	if err != nil {
-		logger.Error(fmt.Sprintf("%+v", err))
-	}
-	logger.Info(fmt.Sprintf("%+v", output))
+	run()
 }
 
 func run() {
 	http.HandleFunc("/hello", shttp.HelloHandler)
+	http.HandleFunc("/kinesis", shttp.KinesisHandler)
 	fmt.Println("Server Start Up........")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
